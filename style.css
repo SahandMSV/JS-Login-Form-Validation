@@ -95,7 +95,7 @@ body {
   width: 65%;
   border-radius: 25px;
   left: 0;
-  transition: none;
+  transition: transform 0.5s ease;
 }
 
 .form-container.right-side {
@@ -231,6 +231,7 @@ a:hover {
 }
 
 .input-field input {
+  padding-block: 12px 0;
   height: 40px;
   font-size: 16px;
   border: none;
@@ -242,7 +243,7 @@ a:hover {
   left: 7px;
   color: rgb(150, 150, 150);
   transform: translateY(-50%);
-  transition: all 0.2s ease-in-out;
+  transition: all 0.3s ease;
   font-size: 16px;
 }
 
@@ -274,7 +275,7 @@ a:hover {
 
 .input-field input:focus ~ label,
 .input-field input:valid ~ label {
-  top: -5px;
+  top: 0px;
   left: 2px;
   font-size: small;
   color: rgb(43, 58, 103);
@@ -286,12 +287,53 @@ a:hover {
   background-color: rgb(43, 58, 103);
 }
 
-.input-field.validInput ~ span::after {
+.input-field.validInput input ~ span::after {
   background-color: rgb(42, 125, 35);
 }
 
-.input-field.invalidInput ~ span::after {
+.input-field.invalidInput input ~ span::after {
   background-color: rgb(159, 23, 23);
+}
+
+input#pass {
+  letter-spacing: 0.15rem;
+}
+
+.errorIcon {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  top: 50%;
+  left: 0;
+  transform: translate(-30px, -85%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+@keyframes wobble {
+  0% {
+    transform: translate(-30px, -85%);
+  }
+  25% {
+    transform: translate(-35px, -85%) rotate(-3deg);
+  }
+  50% {
+    transform: translate(-25px, -85%) rotate(3deg);
+  }
+  75% {
+    transform: translate(-35px, -85%) rotate(-3deg);
+  }
+  100% {
+    transform: translate(-30px, -85%);
+  }
+}
+
+.wobble-animation {
+  animation: wobble 0.5s ease-in-out;
+}
+
+.input-field.error-visible > .errorIcon {
+  opacity: 1;
 }
 
 /* buttons */
@@ -410,12 +452,12 @@ a:hover {
 
 /* links */
 
-#toggle-form-anchor {
+.toggle-form-anchor {
   color: rgb(43, 58, 103);
   transition: color 0.2s ease;
 }
 
-#toggle-form-anchor:hover {
+.toggle-form-anchor:hover {
   cursor: pointer;
   color: rgb(145, 160, 200);
 }
