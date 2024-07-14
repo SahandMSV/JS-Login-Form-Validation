@@ -59,6 +59,12 @@ table {
 /* tablet: 600px-1024px */
 /* desktop: 1024> */
 
+:root {
+  --main-color: rgb(43, 58, 103);
+  --accent-color: rgb(145, 160, 200);
+  --background-white: rgb(235, 235, 240);
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -67,7 +73,7 @@ table {
 }
 
 body {
-  background-color: rgb(235, 235, 240);
+  background-color: var(--background-white);
   min-height: 100vh;
   min-width: 750px;
   display: flex;
@@ -79,50 +85,107 @@ body {
   position: relative;
   width: clamp(550px, 50%, 650px);
   height: 500px;
-  background-color: rgb(145, 160, 200);
+  background-color: var(--accent-color);
   border-radius: 25px;
   box-shadow:
     rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset,
     rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px
   ;
-  /* overflow: hidden; */
   display: flex;
   justify-content: space-between;
   transition: height 0.35s ease;
 }
 
 .login-other-info {
-  /* position: absolute; */
-  
-  font-family: Montserrat, Arial, Helvetica, sans-serif;
   width: calc(clamp(550px, 50vw, 650px) - 65%);
   height: 100%;
+  padding-block: 25px;
+  
+  position: absolute;
   right: 0;
+  
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-block: 25px;
+  
+  font-family: Montserrat, Arial, Helvetica, sans-serif;
   transition: opacity 0.35s ease;
   z-index: 2;
 }
 
+.signup-other-info-title {
+  text-align: center;
+  font-family: Montserrat, Arial, Helvetica, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding-block: 1.5rem 0.8rem;
+}
+
 .signup-other-info {
-  width: 200px;
+  width: calc(clamp(550px, 50vw, 650px) - 65%);
   height: 100%;
+  
+  display: flex;
+  flex-direction: column;
+  
+  position: absolute;
+  left: 0;
+  
+  transition: opacity 0.35s ease;
   z-index: 2;
+}
+
+.signup-other-info-side-panel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  overflow: hidden;
+}
+
+.signup-other-info-side-panel {
+  position: absolute;
+  left: 0;
+  transform: translateX(-0%);
+  height: 100%;
+  width: calc(100% * 4);
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.signup-other-info-side-panel > div {
+  font-family: Montserrat, Arial, Helvetica, sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.2rem;
+  height: 100%;
+  width: 100%;
+  padding: 10px 18px;
+  transition: opacity 0.35s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--main-color);
+  font-weight: 500;
+}
+
+.consent-message {
+  margin-top: 10px;
+  font-weight: 600;
 }
 
 .form-container {
   position: absolute;
-  border: 4px solid rgb(43, 58, 103);
+  border: 4px solid var(--main-color);
   background-color: rgb(235, 235, 240);
   height: 100%;
   width: 65%;
   border-radius: 25px;
   left: 0;
   transition: transform 0.5s ease;
-  transform: translateX(calc(clamp(550px, 50vw, 650px) - clamp(550px, 50vw, 650px)));
+  transform:
+    translateX(calc(clamp(550px, 50vw, 650px) - clamp(550px, 50vw, 650px)));
   overflow: hidden;
   z-index: 3;
 }
@@ -131,7 +194,7 @@ body {
   font-family: Montserrat, Arial, Helvetica, sans-serif;
   font-size: 2.5rem;
   font-weight: 500;
-  color: rgb(43, 58, 103);
+  color: var(--main-color);
   text-align: center;
   
   padding-block: 1.8rem;
@@ -165,17 +228,20 @@ body {
   transition: font-size 0.15s ease;
 }
 
-.login-other-info-services {
+.login-other-info-services,
+.signup-other-info-services {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 0 18px;
   gap: 10px;
 }
 
-.login-other-info-services > button {
-  width: 80%;
+.login-other-info-services > button,
+.signup-other-info-services > button {
+  width: 100%;
   height: 30px;
   border: none;
   background-color: rgb(235, 235, 240);
@@ -188,11 +254,13 @@ body {
   padding-left: 30px;
 }
 
-.login-other-info-services > button:hover {
+.login-other-info-services > button:hover,
+.signup-other-info-services > button:hover {
   cursor: pointer;
 }
 
-.login-other-info-services > button > .companyLogo {
+.login-other-info-services > button > .companyLogo,
+.signup-other-info-services > button > .companyLogo {
   position: absolute;
   top: 0;
   left: 0;
@@ -200,8 +268,8 @@ body {
   height: 30px;
   object-fit: cover;
   border-radius: 50px;
-  background-color: rgb(43, 58, 103);
-  border: 4px solid rgb(43, 58, 103);
+  background-color: var(--main-color);
+  border: 4px solid var(--main-color);
 }
 
 .info-btn-arrow-icon {
@@ -213,7 +281,8 @@ body {
   transition: transform 0.15s ease, fill 0.15s ease;
 }
 
-.login-other-info-services > button:active > .info-btn-arrow-icon {
+.login-other-info-services > button:active > .info-btn-arrow-icon,
+.signup-other-info-services > button:active > .info-btn-arrow-icon {
   transform: translate(7px, 1px);
   fill: rgb(87, 87, 87);
 }
@@ -227,7 +296,7 @@ body {
 }
 
 :link, :visited {
-  color: rgb(43, 58, 103);
+  color: var(--main-color);
 }
 
 a:hover {
@@ -269,7 +338,7 @@ a:hover {
   left: 0;
   height: 2px;
   width: 100%;
-  background-color: rgb(145, 160, 200);
+  background-color: var(--accent-color);
   border-radius: 5px;
   transition: 0.5s;
 }
@@ -290,13 +359,13 @@ a:hover {
   top: 0px;
   left: 2px;
   font-size: small;
-  color: rgb(43, 58, 103);
+  color: var(--main-color);
 }
 
 .input-field input:focus ~ span::after,
 .input-field input:valid ~ span::after {
   width: 100%;
-  background-color: rgb(43, 58, 103);
+  background-color: var(--main-color);
 }
 
 .input-field.validInput input ~ span::after {
@@ -330,13 +399,19 @@ input[type="password"] {
   background-color: rgba(255, 255, 255, 0.45);
   cursor: pointer;
 }
+
+.passToggleBtn:focus {
+  background-color: rgba(255, 255, 255, 1);
+  outline: none;
+}
+
 .passToggleBtn:active {
   background-color: rgba(255, 255, 255, 0.9);
 }
 
 .input-field input:focus ~ .passToggleBtn > svg,
 .input-field input:valid ~ .passToggleBtn > svg {
-  fill: rgb(43, 58, 103);
+  fill: var(--main-color);
 }
 .passToggleBtn > svg {
   position: absolute;
@@ -344,7 +419,7 @@ input[type="password"] {
   height: 23px;
   border-radius: 50%;
   transform: translate(0.5px, 1px);
-  fill: rgb(145, 160, 200);
+  fill: var(--accent-color);
   transition: fill 0.35s ease, opacity 0.15s ease;
 }
 
@@ -402,9 +477,9 @@ input[type="password"] {
 }
 
 .submit-btn {
-  border: 3px solid rgb(43, 58, 103);
+  border: 3px solid var(--main-color);
   border-radius: 10px;
-  color: rgb(43, 58, 103);
+  color: var(--main-color);
   background-color: rgb(235, 235, 240);
   
   font-family: Montserrat, Arial, Helvetica, sans-serif;
@@ -429,12 +504,12 @@ input[type="password"] {
 }
 
 .submit-btn:active {
-  border: 3px solid rgb(145, 160, 200);
-  color: rgb(145, 160, 200);
+  border: 3px solid var(--accent-color);
+  color: var(--accent-color);
 }
 
 .submit-btn.loading:active {
-  border: 3px solid rgb(43, 58, 103);
+  border: 3px solid var(--main-color);
 }
 
 .submit-btn.success {
@@ -444,9 +519,9 @@ input[type="password"] {
 
 .login-submit-btn,
 .signup-submit-btn {
-  border: 3px solid rgb(43, 58, 103);
+  border: 3px solid var(--main-color);
   border-radius: 10px;
-  color: rgb(43, 58, 103);
+  color: var(--main-color);
   background-color: rgb(235, 235, 240);
   
   font-family: Montserrat, Arial, Helvetica, sans-serif;
@@ -480,13 +555,13 @@ input[type="password"] {
 
 .login-submit-btn:active,
 .signup-submit-btn:active {
-  border: 3px solid rgb(145, 160, 200);
-  color: rgb(145, 160, 200);
+  border: 3px solid var(--accent-color);
+  color: var(--accent-color);
 }
 
 .login-submit-btn.loading:active,
 .signup-submit-btn.loading:active {
-  border: 3px solid rgb(43, 58, 103);
+  border: 3px solid var(--main-color);
 }
 
 .login-submit-btn.success,
@@ -519,7 +594,7 @@ input[type="password"] {
 .submit-loading-container > div {
   width: 10px;
   height: 10px;
-  background-color: rgb(43, 58, 103);
+  background-color: var(--main-color);
   border-radius: 50%;
   animation: 1.5s infinite ease loadingAnimation;
 }
@@ -561,13 +636,13 @@ input[type="password"] {
 /* links */
 
 .toggle-form-anchor {
-  color: rgb(43, 58, 103);
+  color: var(--main-color);
   transition: color 0.2s ease;
 }
 
 .toggle-form-anchor:hover {
   cursor: pointer;
-  color: rgb(145, 160, 200);
+  color: var(--accent-color);
 }
 
 /* sign up */
@@ -616,4 +691,210 @@ input[type="password"] {
 .form-signup {
   opacity: 0;
   z-index: 0;
+}
+
+
+input[type="checkbox"] {
+  display: none;
+}
+
+.news-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.customCheckbox {
+  width: 15px;
+  height: 15px;
+  border: 1.4px solid var(--main-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 0);
+  overflow: hidden;
+  transition: background-color 0.15s ease;
+}
+
+.checkIcon {
+  fill: white;
+  height: 15px;
+  width: 15px;
+  rotate: -15deg;
+  transform: translate(-10px, -10px);
+  opacity: 0;
+  transition: opacity 0.15s ease, rotate 0.15s ease, transform 0.15s ease;
+}
+
+.customCheckbox.checked {
+  background-color: var(--main-color);
+}
+
+.customCheckbox.checked > .checkIcon {
+  transform: translate(0px, 0px);
+  rotate: 0deg;
+  opacity: 1;
+}
+
+.customCheckbox:hover {
+  cursor: pointer;
+}
+
+.date-of-birth-text {
+  margin-bottom: 8px;
+}
+
+.birth-date {
+  width: 100%;
+  margin-bottom: 17px;
+  display: grid;
+  grid-template-columns: 2fr 2fr 3fr;
+  gap: 10%;
+}
+
+.date-input-container {
+  display: grid;
+  grid-template-rows: 10px 1fr 10px;
+}
+
+.date-input-container > input {
+  appearance: none;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 500;
+  color: inherit;
+  width: 100%;
+  height: 22px;
+  text-align: center;
+}
+
+.dateArrowUp {
+  border: none;
+  background-color: var(--main-color);
+  border-radius: 50px 50px 12px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.dateArrowUp:not(.disable):active {
+  transform: translateY(-2px);
+}
+
+.dateArrowUp > svg {
+  height: 15px;
+  width: 15px;
+  fill: var(--background-white);
+}
+
+.dateArrowDown {
+  border: none;
+  background-color: var(--main-color);
+  border-radius: 12px 12px 50px 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.dateArrowDown:not(.disable):active {
+  transform: translateY(2px);
+}
+
+.dateArrowDown > svg {
+  rotate: 180deg;
+  height: 15px;
+  width: 15px;
+  fill: var(--background-white);
+}
+
+.password-strength {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--main-color);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.dateArrowUp.disable,
+.dateArrowDown.disable {
+  opacity: 0.3;
+}
+
+.password-range-container {
+  height: 10px;
+  transform: translateY(1.3px);
+  width: 100%;
+  border-radius: 50px;
+  background-color: transparent;
+  border: 1.5px solid var(--main-color);
+  background-color: rgba(0, 0, 0, 0.15);
+} 
+
+.strength-range {
+  width: 15%;
+  height: 100%;
+  background-color: rgb(197, 71, 71);
+  border-radius: 50px;
+  transition: width 0.25s ease-in-out, background-color 0.25s ease;
+}
+
+.password-dependencies {
+  font-size: 0.8rem;
+  display: grid;
+  grid-template-columns: 25px 1fr;
+  margin-bottom: 12px;
+}
+
+.password-dependencies-icon-container {
+  display: flex;
+}
+
+.password-dependencies-icon-container > svg {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  transition: fill 0.35s ease, opacity 0.15s ease;
+}
+
+.check-icon {
+  opacity: 0;
+  fill: rgb(42, 125, 35);
+}
+
+.cross-icon {
+  opacity: 1;
+  fill: var(--main-color);
+}
+
+.password-generator-btn {
+  height: 30px;
+  border: none;
+  background-color: rgba(235, 235, 240, 0.85);
+  border-radius: 50px;
+  position: relative;
+  font-family: Montserrat, Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.password-generator-btn:hover {
+  cursor: pointer;
+}
+.signup-side-panel-password-confirm {
+  text-align: center;
+}
+
+.signup-side-panel-password-confirm > p:nth-child(2) {
+  margin-top: 1rem;
 }

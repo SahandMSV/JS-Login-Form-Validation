@@ -207,10 +207,29 @@
     </symbol>
   </svg>
   
-  <!-- invisibleIcon Icon -->
+  <!-- Invisible Icon -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="invisibleIcon" viewBox="0 -960 960 960">
       <path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Zm0-300Zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280Z"/>
+    </symbol>
+  </svg>
+  
+  <!-- Check Icon -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="checkIcon" viewBox="0 -960 960 960">
+      <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/>
+    </symbol>
+  </svg>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="crossIcon" viewBox="0 -960 960 960">
+      <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>'
+    </symbol>
+  </svg>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="arrowDropUp" viewBox="0 -960 960 960">
+      <path d="m280-400 200-200 200 200H280Z"/>
     </symbol>
   </svg>
   
@@ -278,7 +297,7 @@
             
             <div class="input-field">
               <input type="text" id="signUpEmail" name="pass"
-                spellcheck="false" autocomplete="off" maxlength="20" required>
+                spellcheck="false" autocomplete="off" required>
               <svg class="errorIcon">
                 <use xlink:href="#errorIcon" />
               </svg>
@@ -288,7 +307,8 @@
             
             <div class="input-field">
               <input type="password" id="signUpPass" name="pass"
-                spellcheck="false" autocomplete="off" maxlength="20" required>
+                spellcheck="false" autocomplete="off" required
+                onpaste="return false" oncopy="return false" oncut="return false">
               <svg class="errorIcon">
                 <use xlink:href="#errorIcon" />
               </svg>
@@ -306,7 +326,8 @@
             
             <div class="input-field">
               <input type="password" id="signUpPassConfirm" name="passConfirm"
-                spellcheck="false" autocomplete="off" maxlength="20" required>
+                spellcheck="false" autocomplete="off" required
+                onpaste="return false" oncopy="return false" oncut="return false">
               <svg class="errorIcon">
                 <use xlink:href="#errorIcon" />
               </svg>
@@ -322,7 +343,7 @@
               <label for="signUpPassConfirm">Confirm Password</label>
             </div>
             
-            <div class="input-field">
+            <!-- <div class="input-field">
               <input type="text" id="signUpPhoneIDC" name="signUpPhoneIDC"
                 spellcheck="false" autocomplete="off" maxlength="20" required>
               <input type="text" id="signUpPhoneNum" name="signUpPhoneNum"
@@ -332,7 +353,7 @@
               </svg>
               <span></span>
               <label for="signUpPhoneIDC">Phone</label>
-            </div>
+            </div> -->
           </form>
             
           <div class="form-signup-buttons">
@@ -352,8 +373,6 @@
         </div>
       </div>
     </div>
-    
-    <div class="signup-other-info"></div>
     
     <div class="login-other-info">
         
@@ -404,6 +423,183 @@
         <pre><a href="#">Privacy</a>  |  <a href="#">Terms</a></pre>
       </div>
       
+    </div>
+    
+    <div class="signup-other-info">
+      <p class="signup-other-info-title">Additional Info</p>
+      <div class="signup-other-info-side-panel-container">
+        <div class="signup-other-info-side-panel">
+          <div class="signup-side-panel-email">
+            <p class="date-of-birth-text">Date of birth:</p>
+            <div class="birth-date">
+              <div class="date-input-container">
+                <button class="dateArrowUp">
+                  <svg>
+                    <use xlink:href="#arrowDropUp" />
+                  </svg>
+                </button>
+                <input type="text" value="1">
+                <button class="dateArrowDown">
+                  <svg>
+                    <use xlink:href="#arrowDropUp" />
+                  </svg>
+                </button>
+              </div>
+              <div class="date-input-container">
+                <button class="dateArrowUp">
+                  <svg>
+                    <use xlink:href="#arrowDropUp" />
+                  </svg>
+                </button>
+                <input type="text" value="JAN" readonly>
+                <button class="dateArrowDown">
+                  <svg>
+                    <use xlink:href="#arrowDropUp" />
+                  </svg>
+                </button>
+              </div>
+              <div class="date-input-container">
+                <button class="dateArrowUp">
+                  <svg>
+                    <use xlink:href="#arrowDropUp" />
+                  </svg>
+                </button>
+                <input type="text" value="2000">
+                <button class="dateArrowDown">
+                  <svg>
+                    <use xlink:href="#arrowDropUp" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="news-checkbox">
+              <input type="checkbox" name="receiveNews" value="news">
+              <div class="customCheckbox">
+                <svg class="checkIcon">
+                  <use xlink:href="#checkIcon" />
+                </svg>
+              </div>
+              <label class="receive-news-text" for="receiveNews">Receive updates</label>
+            </div>
+          </div>
+          
+          <div class="signup-side-panel-password">
+            <div class="password-strength">
+              Strength
+              <div class="password-range-container">
+                <div class="strength-range"></div>
+              </div>
+            </div>
+            <div class="password-dependencies">
+              
+              <div class="password-dependencies-icon-container">
+                <svg class="check-icon">
+                  <use xlink:href="#checkIcon" />
+                </svg>
+                <svg class="cross-icon">
+                  <use xlink:href="#crossIcon" />
+                </svg>
+              </div>
+              
+              <p class="password-filter-1">Uppercase letters</p>
+              
+              <div class="password-dependencies-icon-container">
+                <svg class="check-icon">
+                  <use xlink:href="#checkIcon" />
+                </svg>
+                <svg class="cross-icon">
+                  <use xlink:href="#crossIcon" />
+                </svg>
+              </div>
+              
+              <p class="password-filter-2">Lowercase letters</p>
+              
+              <div class="password-dependencies-icon-container">
+                <svg class="check-icon">
+                  <use xlink:href="#checkIcon" />
+                </svg>
+                <svg class="cross-icon">
+                  <use xlink:href="#crossIcon" />
+                </svg>
+              </div>
+              
+              <p class="password-filter-3">Numbers</p>
+              
+              <div class="password-dependencies-icon-container">
+                <svg class="check-icon">
+                  <use xlink:href="#checkIcon" />
+                </svg>
+                <svg class="cross-icon">
+                  <use xlink:href="#crossIcon" />
+                </svg>
+              </div>
+              
+              <p class="password-filter-4">Special characters</p>
+            </div>
+            <button class="password-generator-btn">Password Generator</button>
+          </div>
+          
+          <div class="signup-side-panel-password-confirm">
+            <p>
+              keep your account safe by choosing a strong 
+              password.
+            </p>
+            <p>
+              Thank you for prioritizing your security.
+            </p>
+          </div>
+          
+          <div class="signup-side-panel-phone">
+            <p class="consent-message">
+              By submitting to this form, you're consenting to our 
+              <a href="">terms of service</a> & 
+              <a href="">privacy policy</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="signup-other-info-services">
+        <button>
+          <svg class="companyLogo">
+            <use xlink:href="#googleIcon" />
+          </svg>
+          Google
+          <svg class="info-btn-arrow-icon">
+            <use xlink:href="#customIcon" />
+          </svg>
+        </button>
+        
+        <button>
+          <svg class="companyLogo">
+            <use xlink:href="#facebookIcon" />
+          </svg>
+          Facebook
+          <svg class="info-btn-arrow-icon">
+            <use xlink:href="#customIcon" />
+          </svg>
+        </button>
+        
+        <button>
+          <svg class="companyLogo">
+            <use xlink:href="#githubIcon" />
+          </svg>
+          Github
+          <svg class="info-btn-arrow-icon">
+            <use xlink:href="#customIcon" />
+          </svg>
+        </button>
+        
+        <button>
+          <svg class="companyLogo">
+            <use xlink:href="#appleIcon" />
+          </svg>
+          Apple
+          <svg class="info-btn-arrow-icon">
+            <use xlink:href="#customIcon" />
+          </svg>
+        </button>
+      </div>
     </div>
   </div>
 </body>
