@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Overpass+Mono:wght@300..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Overpass+Mono:wght@300..700&display=swap');
 
@@ -299,6 +301,12 @@ body {
   color: var(--main-color);
 }
 
+::selection {
+  background-color: var(--accent-color);
+  color: white;
+  border-radius: 10px;
+}
+
 a:hover {
   text-decoration: transparent;
 }
@@ -322,7 +330,7 @@ a:hover {
   top: 38%;
   left: 7px;
   color: rgb(150, 150, 150);
-  transform: translateY(-50%);
+  transform: translate(0, -50%);
   transition: all 0.3s ease;
   font-size: 16px;
 }
@@ -669,10 +677,6 @@ input[type="password"] {
   transition: opacity .55s .1s ease, transform 0.45s ease;
 }
 
-#signUpPhoneIDC {
-  display: none;
-}
-
 .form-container.right-side > .form-login {
   opacity: 0;
   z-index: 0;
@@ -698,7 +702,7 @@ input[type="checkbox"] {
   display: none;
 }
 
-.news-checkbox {
+.news-checkbox-container {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -732,7 +736,7 @@ input[type="checkbox"] {
 }
 
 .customCheckbox.checked > .checkIcon {
-  transform: translate(0px, 0px);
+  transform: translate(0.2px, 0.2px);
   rotate: 0deg;
   opacity: 1;
 }
@@ -741,16 +745,34 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 
-.date-of-birth-text {
-  margin-bottom: 8px;
+.date-of-birth-checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.signup-side-panel-email {
+  gap: 12px;
 }
 
 .birth-date {
-  width: 100%;
-  margin-bottom: 17px;
+  height: 20px;
+  overflow: hidden;
+  transition: height 0.35s ease;
+}
+
+.birth-date-input-fields {
+  margin-top: 5px;
   display: grid;
   grid-template-columns: 2fr 2fr 3fr;
-  gap: 10%;
+  gap: 7%;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.date-of-birth-checkbox.checked {
+  margin-top: 8px;
+  height: 100%;
 }
 
 .date-input-container {
@@ -815,18 +837,63 @@ input[type="checkbox"] {
   fill: var(--background-white);
 }
 
-.password-strength {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--main-color);
-  font-weight: 500;
-  margin-bottom: 8px;
-}
-
 .dateArrowUp.disable,
 .dateArrowDown.disable {
   opacity: 0.3;
+}
+
+.gender-dropdown-options {
+  padding-top: 0px;
+  height: 0px;
+  opacity: 0;
+  overflow: hidden;
+  transition: height 0.35s ease, padding-top 0.35s ease, opacity 0.35s ease;
+}
+
+.gender-checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.gender-dropdown-options > div {
+  display: flex;
+  align-items: center;
+  transition: opacity 0.2s ease;
+}
+
+.gender-dropdown-options .arrow-icon {
+  height: 20px;
+  width: 20px;
+  rotate: 90deg;
+  fill: var(--main-color);
+  transform: translateY(2px);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.gender-dropdown-options > div:not(.selected) .arrow-icon {
+  opacity: 0;
+}
+
+.gender-dropdown-options:hover > div:not(.selected) .arrow-icon {
+  opacity: 1;
+}
+
+.gender-dropdown-options > div:hover {
+  opacity: 0.7;
+}
+
+.gender-dropdown-options > div:active,
+.gender-dropdown-options > div.selected:active {
+  opacity: 1;
+}
+
+.gender-dropdown-options > div.selected {
+  opacity: 0.7;
+}
+
+.gender-dropdown-options > div:hover > .arrow-icon {
+  transform: translateY(-2px);
 }
 
 .password-range-container {
@@ -837,7 +904,16 @@ input[type="checkbox"] {
   background-color: transparent;
   border: 1.5px solid var(--main-color);
   background-color: rgba(0, 0, 0, 0.15);
-} 
+}
+
+.password-strength {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--main-color);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
 
 .strength-range {
   width: 15%;
@@ -886,15 +962,298 @@ input[type="checkbox"] {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: scale 0.2s ease;
 }
 
 .password-generator-btn:hover {
   cursor: pointer;
 }
+
+.password-generator-btn:active {
+  scale: 0.97;
+}
+
+.password-generator-dialog {
+  display: none;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.dialog-content {
+  position: absolute;
+  width: 400px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  font-family: "Fira Mono", Arial, Helvetica, sans-serif;
+}
+
+.password-generator-display-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.password-generator-field {
+  font-family: "Fira Mono", Arial, Helvetica, sans-serif;
+  appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  outline: none;
+  width: 100%;
+  height: 30px;
+  border: 1.5px solid var(--main-color);
+  border-radius: 7px;
+  padding: 5px;
+}
+
+.regenerate-btn,
+.paste-field-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--main-color);
+  border: none;
+  border-radius: 50px;
+  width: 40px;
+  height: 30px;
+  transition: scale 0.2s ease, opacity 0.2s ease;
+}
+
+.regenerate-btn:hover,
+.paste-field-btn:hover {
+  cursor: pointer;
+}
+
+.regenerate-btn:active,
+.paste-field-btn:active {
+  scale: 0.9;
+  opacity: 0.9;
+}
+
+.regenerate-btn > svg,
+.paste-field-btn > svg {
+  width: 90%;
+  height: 90%;
+  fill: var(--background-white);
+}
+
+.horizontal-divider {
+  width: 100%;
+  border: 1px solid var(--main-color);
+  border-radius: 50px;
+  margin-block: 20px 15px;
+}
+
+.password-generator-options-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.length-range-input {
+  -webkit-appearance: none;
+  appearance: none;
+  background: none;
+  width: none;
+}
+
+.length-range-input::-webkit-slider-runnable-track {
+/* .length-range-input::-moz-range-track { */
+  background: var(--main-color);
+  height: 6px;
+  border-radius: 5px;
+  position: relative;
+  content: attr(value);
+}
+
+.length-range-input::-webkit-slider-thumb {
+/* .length-range-input::-moz-range-thumb { */
+  margin-top: calc((6px / 2) - (22px / 2));
+  -webkit-appearance: none;
+  height: 22px;
+  width: 12px;
+  background-color: var(--accent-color);
+  border: 1px solid var(--main-color);
+  border-radius: 3px;
+}
+
+.length-range-indicator {
+  font-family: "Titillium Web", sans-serif;
+  width: 25px;
+  height: 22px;
+  border-radius: 3px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: none;
+  border: 1px solid rgb(124, 139, 178);
+  display: flex;
+  align-items: center;
+  text-align: center;
+  transition: border 0.2s ease;
+}
+
+.length-range-indicator:focus {
+  outline: none;
+  border: 1px solid var(--main-color);
+}
+
+.password-generator-checkbox-container {
+  font-family: Montserrat, Arial, Helvetica, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  height: 40px;
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.password-generator-checkbox-container > div {
+  display: flex;
+  gap: 5px;
+}
+
+.password-generator-close {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 8px;
+  right: 8px;
+  cursor: pointer;
+}
+
 .signup-side-panel-password-confirm {
   text-align: center;
 }
 
 .signup-side-panel-password-confirm > p:nth-child(2) {
   margin-top: 1rem;
+}
+
+/* phone */
+
+.input-field > .phone-input-container {
+  width: 200px;
+  height: 40px;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+#signUpPhoneIDC, #signUpPhoneNum {
+  font-family: "Montserrat", sans-serif;
+}
+
+#signUpPhoneNum {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 72%;
+  display: none;
+}
+
+.phone-vertical-divider {
+  height: 22px;
+  width: 1px;
+  border-radius: 5px;
+  background-color: var(--main-color);
+  position: absolute;
+  right: 60%;
+  top: 50%;
+  transform: translateY(-20px);
+  transition: opacity 0.27s 0.2s ease, right 0.27s ease;
+  opacity: 0;
+}
+
+.input-field > .phone-input-container span::before {
+  content: '';
+  position: absolute;
+  top: 40px;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background-color: var(--accent-color);
+  border-radius: 5px;
+  transition: 0.5s;
+}
+
+.input-field > .phone-input-container span::after {
+  content: '';
+  position: absolute;
+  top: 40px;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  border-radius: 5px;
+}
+
+.phone-label-container {
+  position: absolute;
+  width: 200px;
+  height: 25px;
+  bottom: 30px;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.phone-label-container label {
+  position: relative;
+  height: 16px;
+  top: 50%;
+  left: 7px;
+  transform: translate(0, calc(-50% - 15px));
+  color: rgb(150, 150, 150);
+  transition:
+    color 0.25s ease,
+    font-size 0.25s ease,
+    font-weight 0.25s ease,
+    transform 0.45s ease;
+  font-size: 16px;
+  white-space: nowrap;  
+}
+
+.input-field input:focus ~ .phone-label-container,
+.input-field input:valid ~ .phone-label-container {
+  transform: translate(-5px, calc(-50% - 17px));
+}
+
+.input-field input:focus ~ .phone-label-container label,
+.input-field input:valid ~ .phone-label-container label {
+  font-weight: 400;
+  font-size: small;
+  color: var(--main-color);
+}
+
+.phone-label-main {
+  /* border: 1px solid rgb(68, 171, 192); */
+}
+
+.phone-label-placeholder {
+  /* border: 1px solid rgb(26, 171, 26); */
+}
+
+.input-field > .phone-input-container input:focus ~ span::after,
+.input-field > .phone-input-container input:valid ~ span::after {
+  width: 100%;
+  background-color: var(--main-color);
 }

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <link rel="stylesheet" href="style.css">
-  <script defer src="app.js"></script>
+  <script defer   src="app.js"></script>
 </head>
 <body>
   <!-- svg dump -->
@@ -221,15 +221,31 @@
     </symbol>
   </svg>
   
+  <!-- Cross Icon -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="crossIcon" viewBox="0 -960 960 960">
       <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>'
     </symbol>
   </svg>
   
+  <!-- Little Arrow Icon -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="arrowDropUp" viewBox="0 -960 960 960">
       <path d="m280-400 200-200 200 200H280Z"/>
+    </symbol>
+  </svg>
+  
+  <!-- Generate Icon -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="regnerateIcon" viewBox="0 -960 960 960">
+      <path d="M204-318q-22-38-33-78t-11-82q0-134 93-228t227-94h7l-64-64 56-56 160 160-160 160-56-56 64-64h-7q-100 0-170 70.5T240-478q0 26 6 51t18 49l-60 60ZM481-40 321-200l160-160 56 56-64 64h7q100 0 170-70.5T720-482q0-26-6-51t-18-49l60-60q22 38 33 78t11 82q0 134-93 228t-227 94h-7l64 64-56 56Z"/>
+    </symbol>
+  </svg>
+  
+  <!-- Paste Icon -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="pasteIcon" viewBox="0 -960 960 960">
+      <path d="m720-120-56-57 63-63H480v-80h247l-63-64 56-56 160 160-160 160Zm120-400h-80v-240h-80v120H280v-120h-80v560h200v80H200q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h167q11-35 43-57.5t70-22.5q40 0 71.5 22.5T594-840h166q33 0 56.5 23.5T840-760v240ZM480-760q17 0 28.5-11.5T520-800q0-17-11.5-28.5T480-840q-17 0-28.5 11.5T440-800q0 17 11.5 28.5T480-760Z"/>
     </symbol>
   </svg>
   
@@ -343,17 +359,21 @@
               <label for="signUpPassConfirm">Confirm Password</label>
             </div>
             
-            <!-- <div class="input-field">
+            <div class="input-field">
               <input type="text" id="signUpPhoneIDC" name="signUpPhoneIDC"
-                spellcheck="false" autocomplete="off" maxlength="20" required>
+                spellcheck="false" autocomplete="off" maxlength="4" required>
+              <div class="phone-vertical-divider"></div>
               <input type="text" id="signUpPhoneNum" name="signUpPhoneNum"
                 spellcheck="false" autocomplete="off" maxlength="20" required>
               <svg class="errorIcon">
                 <use xlink:href="#errorIcon" />
               </svg>
               <span></span>
-              <label for="signUpPhoneIDC">Phone</label>
-            </div> -->
+              <div class="phone-label-container">
+                <label class="phone-label-placeholder" for="signUpPhoneIDC">Phone</label>
+                <label class="phone-label-main" for="signUpPhoneIDC">Phone</label>
+              </div>
+            </div>
           </form>
             
           <div class="form-signup-buttons">
@@ -430,56 +450,94 @@
       <div class="signup-other-info-side-panel-container">
         <div class="signup-other-info-side-panel">
           <div class="signup-side-panel-email">
-            <p class="date-of-birth-text">Date of birth:</p>
             <div class="birth-date">
-              <div class="date-input-container">
-                <button class="dateArrowUp">
-                  <svg>
-                    <use xlink:href="#arrowDropUp" />
+              <div class="date-of-birth-checkbox-container">
+                <div class="customCheckbox">
+                  <svg class="checkIcon">
+                    <use xlink:href="#checkIcon" />
                   </svg>
-                </button>
-                <input type="text" value="1">
-                <button class="dateArrowDown">
-                  <svg>
-                    <use xlink:href="#arrowDropUp" />
-                  </svg>
-                </button>
+                </div>
+                <label class="date-of-birth-checkbox-text">Date of birth</label>
               </div>
-              <div class="date-input-container">
-                <button class="dateArrowUp">
-                  <svg>
-                    <use xlink:href="#arrowDropUp" />
-                  </svg>
-                </button>
-                <input type="text" value="JAN" readonly>
-                <button class="dateArrowDown">
-                  <svg>
-                    <use xlink:href="#arrowDropUp" />
-                  </svg>
-                </button>
-              </div>
-              <div class="date-input-container">
-                <button class="dateArrowUp">
-                  <svg>
-                    <use xlink:href="#arrowDropUp" />
-                  </svg>
-                </button>
-                <input type="text" value="2000">
-                <button class="dateArrowDown">
-                  <svg>
-                    <use xlink:href="#arrowDropUp" />
-                  </svg>
-                </button>
+              <div class="birth-date-input-fields">
+                <div class="date-input-container">
+                  <button class="dateArrowUp">
+                    <svg>
+                      <use xlink:href="#arrowDropUp" />
+                    </svg>
+                  </button>
+                  <input type="text" value="1">
+                  <button class="dateArrowDown">
+                    <svg>
+                      <use xlink:href="#arrowDropUp" />
+                    </svg>
+                  </button>
+                </div>
+                <div class="date-input-container">
+                  <button class="dateArrowUp">
+                    <svg>
+                      <use xlink:href="#arrowDropUp" />
+                    </svg>
+                  </button>
+                  <input type="text" value="JAN" readonly>
+                  <button class="dateArrowDown">
+                    <svg>
+                      <use xlink:href="#arrowDropUp" />
+                    </svg>
+                  </button>
+                </div>
+                <div class="date-input-container">
+                  <button class="dateArrowUp">
+                    <svg>
+                      <use xlink:href="#arrowDropUp" />
+                    </svg>
+                  </button>
+                  <input type="text" value="2000">
+                  <button class="dateArrowDown">
+                    <svg>
+                      <use xlink:href="#arrowDropUp" />
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
-            <div class="news-checkbox">
-              <input type="checkbox" name="receiveNews" value="news">
+            <div class="news-checkbox-container">
               <div class="customCheckbox">
                 <svg class="checkIcon">
                   <use xlink:href="#checkIcon" />
                 </svg>
               </div>
-              <label class="receive-news-text" for="receiveNews">Receive updates</label>
+              <label class="news-checkbox-text" for="receiveNews">Receive updates</label>
+            </div>
+            <div class="gender-dropdown-container">
+              <div class="gender-checkbox-container">
+                <div class="customCheckbox">
+                  <svg class="checkIcon">
+                    <use xlink:href="#checkIcon" />
+                  </svg>
+                </div>
+                <label class="gender-checkbox-text" for="receiveNews">Gender</label>
+              </div>
+              <div class="gender-dropdown-options">
+                <div>
+                  <svg class="arrow-icon">
+                    <use xlink:href="#arrowDropUp" />
+                  </svg>
+                  Male
+                </div>
+                <div>
+                  <svg class="arrow-icon">
+                    <use xlink:href="#arrowDropUp" />
+                  </svg>
+                  Female
+                </div>
+                <div class="selected">
+                  <svg class="arrow-icon">
+                    <use xlink:href="#arrowDropUp" />
+                  </svg>
+                  Prefer not to say
+                </div>
+              </div>
             </div>
           </div>
           
@@ -599,6 +657,50 @@
             <use xlink:href="#customIcon" />
           </svg>
         </button>
+      </div>
+    </div>
+    
+  </div>
+  
+  <div class="password-generator-dialog">
+    <div class="dialog-content">
+      <div class="password-generator-display-container">
+        <span class="password-generator-close">&times;</span>
+        <input class="password-generator-field" type="text" spellcheck="false">
+        <button class="regenerate-btn">
+          <svg>
+            <use xlink:href="#regnerateIcon" />
+          </svg>
+        </button>
+        <button class="paste-field-btn">
+          <svg>
+            <use xlink:href="#pasteIcon" />
+          </svg>
+        </button>
+      </div>
+      <span class="horizontal-divider"></span>
+      <div class="password-generator-options-container">
+        Length
+        <input class="length-range-input" type="range" min="6" max="50" value="15">
+        <input class="length-range-indicator" type="text" value="15">
+        <div class="password-generator-checkbox-container">
+          <div class="password-generator-number-checkbox-container">
+            <div class="customCheckbox">
+              <svg class="checkIcon">
+                <use xlink:href="#checkIcon" />
+              </svg>
+            </div>
+            <label class="password-generator-number-checkbox-text">Numbers</label>
+          </div>
+          <div class="password-generator-specialChar-checkbox-container">
+            <div class="customCheckbox">
+              <svg class="checkIcon">
+                <use xlink:href="#checkIcon" />
+              </svg>
+            </div>
+            <label class="password-generator-specialChar-checkbox-text">Special Chars</label>
+          </div>
+        </div>
       </div>
     </div>
   </div>
