@@ -118,6 +118,7 @@ body {
 
 .signup-other-info-title {
   text-align: center;
+  color: var(--main-color);
   font-family: Montserrat, Arial, Helvetica, sans-serif;
   font-size: 1.1rem;
   font-weight: 500;
@@ -388,7 +389,7 @@ input[type="password"] {
   letter-spacing: -0.1px;
 }
 
-.passToggleBtn {
+.passToggleBtn, .explore-btn {
   position: absolute;
   width: 26px;
   height: 26px;
@@ -403,17 +404,17 @@ input[type="password"] {
   justify-content: center;
   transition: background-color 0.15s ease;
 }
-.passToggleBtn:hover {
+.passToggleBtn:hover, .explore-btn:hover {
   background-color: rgba(255, 255, 255, 0.45);
   cursor: pointer;
 }
 
-.passToggleBtn:focus {
+.passToggleBtn:focus, .explore-btn:focus {
   background-color: rgba(255, 255, 255, 1);
   outline: none;
 }
 
-.passToggleBtn:active {
+.passToggleBtn:active, .explore-btn:active {
   background-color: rgba(255, 255, 255, 0.9);
 }
 
@@ -421,14 +422,28 @@ input[type="password"] {
 .input-field input:valid ~ .passToggleBtn > svg {
   fill: var(--main-color);
 }
+
+.input-field input:focus ~ .explore-btn > svg,
+.input-field input:valid ~ .explore-btn > svg {
+  fill: var(--main-color);
+}
+
 .passToggleBtn > svg {
   position: absolute;
   width: 23px;
   height: 23px;
   border-radius: 50%;
-  transform: translate(0.5px, 1px);
   fill: var(--accent-color);
   transition: fill 0.35s ease, opacity 0.15s ease;
+}
+
+.explore-btn > svg {
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  fill: var(--accent-color);
+  transition: fill 0.35s ease, opacity 0.15s ease;
+  z-index: 50;
 }
 
 .invisibleIcon {
@@ -881,10 +896,10 @@ input[type="checkbox"] {
 
 .gender-dropdown-options > div:hover {
   opacity: 0.7;
+  cursor: pointer;
 }
 
-.gender-dropdown-options > div:active,
-.gender-dropdown-options > div.selected:active {
+.gender-dropdown-options > div:active{
   opacity: 1;
 }
 
@@ -893,7 +908,11 @@ input[type="checkbox"] {
 }
 
 .gender-dropdown-options > div:hover > .arrow-icon {
-  transform: translateY(-2px);
+  transform: translateY(-1px);
+}
+
+.gender-dropdown-options > div:active > .arrow-icon {
+  transform: translateY(-2.5px);
 }
 
 .password-range-container {
@@ -973,7 +992,7 @@ input[type="checkbox"] {
   scale: 0.97;
 }
 
-.password-generator-dialog {
+.password-generator-dialog, .explore-IDC-dialog {
   display: none;
   position: fixed;
   background: rgba(0, 0, 0, 0.5);
@@ -986,7 +1005,7 @@ input[type="checkbox"] {
   transition: opacity 0.25s ease;
 }
 
-.dialog-content {
+.password-generator-dialog-content, .explore-IDC-dialog-content {
   position: absolute;
   width: 400px;
   top: 50%;
@@ -1001,13 +1020,17 @@ input[type="checkbox"] {
   font-family: "Fira Mono", Arial, Helvetica, sans-serif;
 }
 
+.explore-IDC-dialog-content {
+  width: 300px;
+}
+
 .password-generator-display-container {
   display: flex;
   justify-content: space-between;
   gap: 5px;
 }
 
-.password-generator-field {
+.password-generator-field, .explore-IDC-search-field {
   font-family: "Fira Mono", Arial, Helvetica, sans-serif;
   appearance: none;
   -webkit-appearance: none;
@@ -1018,6 +1041,92 @@ input[type="checkbox"] {
   border: 1.5px solid var(--main-color);
   border-radius: 7px;
   padding: 5px;
+}
+
+.explore-IDC-options-container {
+  width: 100%;
+  height: 200px;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  margin-right: 4px;
+}
+
+.explore-IDC-options-container::-webkit-scrollbar {
+  width: 8px;
+}
+.explore-IDC-options-container::-webkit-scrollbar-track {  
+  background: var(--background-white);
+  border-radius: 0 4px 4px 0;
+}
+.explore-IDC-options-container::-webkit-scrollbar-thumb {  
+  background: var(--accent-color);
+  border-radius: 10px;
+  height: 22px;
+}
+.explore-IDC-options-container::-webkit-scrollbar-thumb:hover {  
+  cursor: pointer;
+}
+.explore-IDC-options-container::-webkit-scrollbar-thumb:active {  
+  background: var(--main-color);
+}
+
+.explore-IDC-options-parent {
+  position: relative;
+}
+
+.explore-IDC-options-parent span {
+  position: absolute;
+  width: calc(100% - 8px);
+  height: 40px;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+} 
+
+.explore-IDC-options-parent .fade-up {
+  background: linear-gradient(to bottom, white, transparent);
+  transform: translateY(-1px);
+  top: 0;
+  opacity: 0;
+}
+
+.explore-IDC-options-parent .fade-down {
+  background: linear-gradient(to top, white, transparent);
+  transform: translateY(1px);
+  bottom: 0;
+  opacity: 1;
+}
+
+.explore-IDC-options-container > .country-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px;
+  font-size: 1.2rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, scale 0.1s ease, opacity 0.25s ease;
+  margin-right: 5px;
+}
+.explore-IDC-options-container > .country-option:hover {
+  background-color: var(--background-white);
+  cursor: pointer;
+}
+.explore-IDC-options-container > .country-option:active {
+  background-color: rgb(216, 216, 226);
+}
+.explore-IDC-options-container > .country-option:active > div {
+  opacity: 0.8;
+  color: black;
+}
+
+.explore-IDC-options-container .country-code {
+  font-family: "Montserrat", sans-serif;
+  color: var(--main-color);
+  font-size: 1.0rem;
+  font-weight: 500;
+}
+.explore-IDC-options-container .country-name {
+  color: black;
 }
 
 .regenerate-btn,
@@ -1127,7 +1236,7 @@ input[type="checkbox"] {
   gap: 5px;
 }
 
-.password-generator-close {
+.password-generator-close, .explore-IDC-close {
   position: absolute;
   width: 10px;
   height: 10px;
@@ -1205,7 +1314,7 @@ input[type="checkbox"] {
 
 .phone-label-container {
   position: absolute;
-  width: 200px;
+  width: 165px;
   height: 25px;
   bottom: 30px;
   transition: transform 0.3s ease;
@@ -1221,7 +1330,7 @@ input[type="checkbox"] {
   height: 16px;
   top: 50%;
   left: 7px;
-  transform: translate(0, calc(-50% - 15px));
+  transform: translate(0, calc(-50% - 17.7px));
   color: rgb(150, 150, 150);
   transition:
     color 0.25s ease,
@@ -1242,14 +1351,6 @@ input[type="checkbox"] {
   font-weight: 400;
   font-size: small;
   color: var(--main-color);
-}
-
-.phone-label-main {
-  /* border: 1px solid rgb(68, 171, 192); */
-}
-
-.phone-label-placeholder {
-  /* border: 1px solid rgb(26, 171, 26); */
 }
 
 .input-field > .phone-input-container input:focus ~ span::after,

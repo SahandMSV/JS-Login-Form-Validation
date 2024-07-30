@@ -1,6 +1,23 @@
 // Form switch transitions
 let isLoggingInMode = true
 let animationInProgress = false
+
+const formToggleBtn = document.querySelectorAll('.toggle-form-anchor')
+formToggleBtn.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const formContainer = document.querySelector('.form-container')
+    const inputFields = document.querySelectorAll('.input-field')
+    inputFields.forEach(field => {
+      console.log(field.classList)
+      if (field.classList.contains('error-visible')) {
+        field.classList.remove('error-visible')
+      }
+    })
+    
+    formToggle()
+  })
+})
+
 function formToggle() {
   const container = document.querySelector('.container')
   const formContainer = document.querySelector('.form-container')
@@ -92,12 +109,33 @@ passToggleBtns.forEach((btn) => {
       
       if (input.value.length !== 0) {
         input.focus()
-        input.setSelectionRange(input.value.length, input.value.length)
+        input.setSelectionRange(
+          input.value.length,
+          input.value.length
+        )
       } else {
         btn.blur()
       }
     })
   })
+})
+
+// Explore IDCs btn
+const exploreBtn = document.querySelector('.explore-btn')
+exploreBtn.addEventListener('click', (e) => {
+  e.preventDefault()
+  const inputICD = exploreBtn.parentElement.querySelector('#signUpPhoneIDC')
+  const inputPhoneNum = exploreBtn.parentElement.querySelector('#signUpPhoneNum')
+  
+  if (inputICD.value.length !== 0 && inputPhoneNum.value.length === 0) {
+    inputICD.focus()
+    inputICD.setSelectionRange(input.value.length, input.value.length)
+  } else if (inputICD.value.length !== 0 && inputPhoneNum.value.length !== 0) {
+    inputPhoneNum.focus()
+    inputPhoneNum.setSelectionRange(input.value.length, input.value.length)
+  } else {
+    exploreBtn.blur()
+  }
 })
 
 
@@ -454,20 +492,51 @@ function updatePasswordStrength(str) {
 }
 
 const passwordGeneratorBtn = document.querySelector('.password-generator-btn')
-const dialogBackgroundOverlay = document.querySelector('.password-generator-dialog')
-const dialog = document.querySelector('.password-generator-dialog')
-const closeBtn = document.querySelector('.password-generator-close')
+const passwordGeneratorDialogBackground = document.querySelector('.password-generator-dialog')
+const passwordGeneratorDialog = document.querySelector('.password-generator-dialog')
+const passwordGeneratorCloseBtn = document.querySelector('.password-generator-close')
 
+passwordGeneratorDialogBackground.addEventListener('click', (e) => {
+  if (e.target === passwordGeneratorDialogBackground) {
+    passwordGeneratorCloseBtn.click()
+  }  
+})
 passwordGeneratorBtn.addEventListener('click', () =>  {
-  dialog.style.display = 'block'
+  passwordGeneratorDialog.style.display = 'block'
   setTimeout(() => {
-    dialog.style.opacity = '1'
+    passwordGeneratorDialog.style.opacity = '1'
   }, 250)
 })
-closeBtn.addEventListener('click', () => {
-  dialog.style.opacity = '0'
+passwordGeneratorCloseBtn.addEventListener('click', () => {
+  passwordGeneratorDialog.style.opacity = '0'
   setTimeout(() => {
-    dialog.style.display = 'none'
+    passwordGeneratorDialog.style.display = 'none'
+  }, 250)
+})
+
+const exploreDialingCodeBtn = document.querySelector('.explore-btn')
+const exploreDialingCodeDialogBackground = document.querySelector('.explore-IDC-dialog')
+const exploreDialingCodeDialog = document.querySelector('.explore-IDC-dialog-content')
+const exploreDialingCodeCloseBtn = document.querySelector('.explore-IDC-close')
+const searchIDCField = document.querySelector('.explore-IDC-search-field')
+
+exploreDialingCodeDialogBackground.addEventListener('click', (e) => {
+  if (e.target === exploreDialingCodeDialogBackground) {
+    exploreDialingCodeCloseBtn.click()
+  }  
+})
+exploreDialingCodeBtn.addEventListener('click', (e) =>  {
+  e.preventDefault()
+  exploreDialingCodeDialogBackground.style.display = 'block'
+  setTimeout(() => {
+    exploreDialingCodeDialogBackground.style.opacity = '1'
+    searchIDCField.focus()
+  }, 250)
+})
+exploreDialingCodeCloseBtn.addEventListener('click', () => {
+  exploreDialingCodeDialogBackground.style.opacity = '0'
+  setTimeout(() => {
+    exploreDialingCodeDialogBackground.style.display = 'none'
   }, 250)
 })
 
@@ -522,7 +591,7 @@ const rangeInputIndicator = document.querySelector('.length-range-indicator')
 pasteToFieldBtn.addEventListener('click', () => {
   signUpPassField.value = passGeneratorField.value
   signUpPassConfirmField.value = passGeneratorField.value
-  closeBtn.click()
+  passwordGeneratorCloseBtn.click()
   setTimeout(() => {
     rangeInputIndicator.value = '15'
     
@@ -534,7 +603,10 @@ pasteToFieldBtn.addEventListener('click', () => {
       passwordGeneratorSpecialChar.click()
     }
     
-    signUpPassField.dispatchEvent(new Event('input'))
+    signUpPassField.dispatchEvent(new Event('input', {  
+      bubbles: true,
+      cancelable: true
+    }))
     signUpPassConfirmField.focus()
   }, 250)
 })
@@ -580,7 +652,7 @@ rangeInputIndicator.addEventListener('blur', function() {
 
 // Phone Field
 // 1, 44, 49, 7
-const sortedCountryCodes = {
+const countryCodes = {
   "1": "United States", //
   "1": "Canada", //
   "20": "Egypt",
@@ -707,8 +779,6 @@ const sortedCountryCodes = {
   "86": "China",
   "880": "Bangladesh",
   "884": "Taiwan",
-  "881": "GMSS",
-  "888": "Anonymous",
   "90": "Turkey",
   "91": "India",
   "92": "Pakistan",
@@ -738,10 +808,127 @@ const sortedCountryCodes = {
   "998": "Uzbekistan"
 }
 
+const exploreDialogOptionContainer = document.querySelector('.explore-IDC-options-container')
+function loadCountryOptions(countryCodes) {
+  const countryOptions = []
+  
+  for (const countryCode in countryCodes) {
+    if (countryCodes.hasOwnProperty(countryCode)) {
+      const optionDiv = document.createElement('div')
+      optionDiv.classList.add('country-option')
+      
+      const nameDiv = document.createElement('div')
+      nameDiv.innerHTML = countryCodes[countryCode]
+      nameDiv.classList.add('country-name')
+      
+      const codeDiv = document.createElement('div')
+      codeDiv.innerHTML = "+" + countryCode
+      codeDiv.classList.add('country-code')
+      
+      optionDiv.appendChild(nameDiv)
+      optionDiv.appendChild(codeDiv)
+      countryOptions.push(optionDiv)
+    }
+  }
+  
+  return countryOptions
+}  
+
+function sortCountryOptions(countryOptions) {
+  countryOptions.sort((a, b) => {
+    const nameA = a.querySelector('.country-name').innerHTML.toLowerCase()
+    const nameB = b.querySelector('.country-name').innerHTML.toLowerCase()
+    
+    if (nameA < nameB) return -1
+    if (nameA > nameB) return 1
+    return 0
+  })
+}  
+
+function GenerateSortedExploreOptions(countryCodes) {
+  const countryOptions = loadCountryOptions(countryCodes)
+  sortCountryOptions(countryOptions)
+  
+  // Append New & Sorted Items
+  exploreDialogOptionContainer.innerHTML = ''
+  countryOptions.forEach(optionDiv => {
+    exploreDialogOptionContainer.appendChild(optionDiv)
+  })
+}
+GenerateSortedExploreOptions(countryCodes) // init
+
+function updateExploreOptionListeners(container) {
+  const exploreOptions = container.querySelectorAll('div')
+  exploreOptions.forEach(option => {
+    option.addEventListener('click', () => {
+      const idc = option.querySelector('.country-code').innerHTML
+      signUpPhoneIDCField.value = idc
+      exploreDialingCodeCloseBtn.click()
+      
+      signUpPhoneIDCField.dispatchEvent(new Event('input'))
+      
+      signUpPhoneIDCField.focus()
+      signUpPhoneField.focus()
+    })
+  })
+}
+
+searchIDCField.addEventListener('input', () => {
+  const inputValue = searchIDCField.value.toLowerCase()
+  const updatedCodes = {}
+  
+  for (const countryCode in countryCodes) {
+    if (countryCodes.hasOwnProperty(countryCode)) {
+      const countryName = countryCodes[countryCode].toLowerCase()
+      
+      if (countryCode.includes(inputValue) || countryName.includes(inputValue)) {
+        updatedCodes[countryCode] = countryCodes[countryCode]
+      }
+    }
+  }
+  
+  GenerateSortedExploreOptions(updatedCodes)
+  updateExploreOptionListeners(exploreDialogOptionContainer)
+  
+  // Scroll Back Up
+  exploreDialogOptionContainer.scrollTo({  
+    top: 0,  
+    behavior: 'instant'
+  })
+})
+
+const fadeOverlayUp = document.querySelector('.explore-IDC-options-parent .fade-up')
+const fadeOverlayDown = document.querySelector('.explore-IDC-options-parent .fade-down')
+function checkScrollPosition() {  
+  const scrollTop = exploreDialogOptionContainer.scrollTop
+  const scrollHeight = exploreDialogOptionContainer.scrollHeight
+  const clientHeight = exploreDialogOptionContainer.clientHeight
+  
+  if (scrollTop === 0) {
+    // top
+    console.log("top")
+    fadeOverlayUp.style.opacity = 0
+    fadeOverlayDown.style.opacity = 1
+  } else if (scrollTop + clientHeight >= scrollHeight) {
+    // down
+    console.log("down")
+    fadeOverlayUp.style.opacity = 1
+    fadeOverlayDown.style.opacity = 0
+  } else {
+    // middle
+    fadeOverlayUp.style.opacity = 1
+    fadeOverlayDown.style.opacity = 1
+  }
+}
+
+exploreDialogOptionContainer.addEventListener('scroll', checkScrollPosition)
+
 const signUpPhoneIDCField = document.querySelector('.form-signup #signUpPhoneIDC')
 const signUpPhoneField = document.querySelector('.form-signup #signUpPhoneNum')
 const verticalDivider = document.querySelector('.phone-vertical-divider')
 let isInputFocused = false
+
+updateExploreOptionListeners(exploreDialogOptionContainer)
 
 function showDivider() {
   verticalDivider.style.transition = 'opacity 0.27s 0.2s ease, right 0.27s ease-out'
@@ -768,10 +955,10 @@ function updatePhoneInputLabel(IDC) {
   const mainLabel = document.querySelector('.phone-label-main')
   const containerLabels = document.querySelectorAll('.phone-label-container label')
   
-  if (IDC === '' || sortedCountryCodes[`${IDC}`] === undefined) {
+  if (IDC === '' || countryCodes[`${IDC}`] === undefined) {
     placeholder.textContent = 'Phone'
   } else {
-    placeholder.textContent = sortedCountryCodes[`${IDC}`]
+    placeholder.textContent = countryCodes[`${IDC}`]
   }
   
   if (mainLabel.textContent === placeholder.textContent) { return }
@@ -823,178 +1010,11 @@ signUpPhoneField.addEventListener('blur', () => {
   }, 100)
 })
 
-signUpPhoneField.addEventListener('keydown', () => {
-  if (event.key === 'Backspace' && signUpPhoneField.value === '') {
+signUpPhoneField.addEventListener('keydown', (e) => {
+  if (e.key === 'Backspace' && signUpPhoneField.value === '') {
     signUpPhoneIDCField.focus()
   }
 })
-
-const APP = {
-  init() {
-    APP.addListener()
-  },
-  addListener() {
-    const loginEmailField = document.querySelector('.form-login #loginEmail')
-    const loginPasswordField = document.querySelector('.form-login #loginPass')
-    const signUpEmailField = document.querySelector('.form-signup #signUpEmail')
-    const signUpPassField = document.querySelector('.form-signup #signUpPass')
-    const signUpPassConfirmField = document.querySelector('.form-signup #signUpPassConfirm')
-    const signUpPhoneIDCField = document.querySelector('.form-signup #signUpPhoneIDC')
-    const signUpPhoneField = document.querySelector('.form-signup #signUpPhoneNum')
-    
-    loginEmailField.addEventListener('input', () => {
-      APP.testEmail(loginEmailField)
-    })
-    
-    loginPasswordField.addEventListener('input', () => {
-      APP.testPassword(loginPasswordField)
-    })
-    
-    signUpEmailField.addEventListener('input', () => {
-      APP.testEmail(signUpEmailField)
-    })
-    
-    signUpPassField.addEventListener('input', () => {
-      APP.testPassword(signUpPassField)
-      updatePasswordStrength(signUpPassField.value)
-      APP.testPassConfirm(signUpPassField, signUpPassConfirmField)
-    })
-    
-    signUpPassConfirmField.addEventListener('input', () => {
-      APP.testPassConfirm(signUpPassField, signUpPassConfirmField)
-    })
-    
-    signUpPhoneField.addEventListener('input', () => {
-      APP.testPhoneNumber(signUpPhoneIDCField, signUpPhoneField)
-    })
-    
-    signUpPhoneIDCField.addEventListener('input', () => {
-      let inputValue = signUpPhoneIDCField.value
-      
-      // Allow only numbers and plus sign
-      inputValue = inputValue.replace(/\D/g, '')
-      
-      // Ensure the value always starts with one plus sign
-      if (inputValue === '+') {
-        inputValue = ''
-      } else {
-        if (inputValue.length === 1) {
-          inputValue = '+' + inputValue
-        } else {
-          inputValue = inputValue.slice(0, 4)
-        }
-      }
-      
-      if (!inputValue.startsWith('+')) {
-        inputValue = '+' + inputValue
-      }
-      
-      if (inputValue === '+') {
-        inputValue = ''
-      }
-      
-      signUpPhoneIDCField.value = inputValue
-      updatePhoneInputLabel(signUpPhoneIDCField.value.slice(1))
-      if (sortedCountryCodes[`${signUpPhoneIDCField.value.slice(1)}`] !== undefined) {
-        signUpPhoneField.focus()
-      }
-    })
-    
-    // Side Panels
-    
-    signUpEmailField.addEventListener('focus', () => {
-      sidePanelToggle(1)
-    })
-    
-    signUpPassField.addEventListener('focus', () => {
-      sidePanelToggle(2)
-    })
-    
-    signUpPassConfirmField.addEventListener('focus', () => {
-      sidePanelToggle(3)
-    })
-    
-    signUpPhoneField.addEventListener('focus', () => {
-      sidePanelToggle(4)
-    })
-    
-    signUpPhoneIDCField.addEventListener('focus', () => {
-      sidePanelToggle(4)
-    })
-  },
-  validateLogin() {
-    const email = document.getElementById('loginEmail').value
-    const password = document.getElementById('loginPass').value
-    // check with database
-    return true
-  },
-  validateSignUp() {
-    const email = document.getElementById('loginEmail').value
-    const password = document.getElementById('loginPass').value
-    // const dateOfBirth = 
-    // const gender = 
-    // const region = 
-    // const phoneNum = 
-    // add to database
-    return true
-  },
-  testEmail(emailField) {
-    if (emailField.value.length > 22) {
-      emailField.style.fontSize = '0.75rem'
-    } else if (emailField.value.length > 17) {
-      emailField.style.fontSize = '0.88rem'
-    } else {
-      emailField.style.fontSize = '1.1rem'
-    }
-    let re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-    let isMatch = re.test(emailField.value)
-    updateInputField(emailField, isMatch)
-  },
-  testPassword(passField) {
-    if (passField.value.length > 3 && passField.value.length < 256) {
-      updateInputField(passField, true)
-    } else {
-      updateInputField(passField, false)
-    }
-    
-    if (passField.value.length > 22) {
-      passField.style.fontSize = '0.75rem'
-    } else if (passField.value.length > 15) {
-      passField.style.fontSize = '0.88rem'
-    } else {
-      passField.style.fontSize = '1.1rem'
-    }
-  },
-  testPassConfirm(passField, passConfirmField) {
-    if (passField.value === passConfirmField.value) {
-      updateInputField(passConfirmField, true)
-    } else {
-      updateInputField(passConfirmField, false)
-    }
-    
-    if (passConfirmField.value.length > 22) {
-      passConfirmField.style.fontSize = '0.75rem'
-    } else if (passConfirmField.value.length > 15) {
-      passConfirmField.style.fontSize = '0.88rem'
-    } else {
-      passConfirmField.style.fontSize = '1.1rem'
-    }
-  },
-  testPhoneNumber(IDCField, callingCodeField) {
-    if (callingCodeField.value === '') {
-      IDCField.parentNode.classList.remove('invalidInput')
-      IDCField.parentNode.classList.remove('validInput')
-    } else if (
-      sortedCountryCodes[`${IDCField.value.slice(1)}`] !== undefined &&
-      callingCodeField.value.length > 4
-    ) {
-      updateInputField(IDCField, true)
-    } else {
-      updateInputField(IDCField, false)
-    }
-  }
-}
-document.addEventListener('DOMContentLoaded', APP.init)
 
 // date of birth inputs
 
@@ -1126,3 +1146,178 @@ dayIndicatorDown.addEventListener('click', () => {
 
 dayInput.value = currentDay
 updateDayInput()
+
+const APP = {
+  init() {
+    APP.addListener()
+  },
+  addListener() {
+    const loginEmailField = document.querySelector('.form-login #loginEmail')
+    const loginPasswordField = document.querySelector('.form-login #loginPass')
+    const signUpEmailField = document.querySelector('.form-signup #signUpEmail')
+    const signUpPassField = document.querySelector('.form-signup #signUpPass')
+    const signUpPassConfirmField = document.querySelector('.form-signup #signUpPassConfirm')
+    const signUpPhoneIDCField = document.querySelector('.form-signup #signUpPhoneIDC')
+    const signUpPhoneField = document.querySelector('.form-signup #signUpPhoneNum')
+    
+    loginEmailField.addEventListener('input', () => {
+      APP.testEmail(loginEmailField)
+    })
+    
+    loginPasswordField.addEventListener('input', () => {
+      APP.testPassword(loginPasswordField)
+    })
+    
+    signUpEmailField.addEventListener('input', () => {
+      APP.testEmail(signUpEmailField)
+    })
+    
+    signUpPassField.addEventListener('input', () => {
+      APP.testPassword(signUpPassField)
+      updatePasswordStrength(signUpPassField.value)
+      APP.testPassConfirm(signUpPassField, signUpPassConfirmField)
+    })
+    
+    signUpPassConfirmField.addEventListener('input', () => {
+      APP.testPassConfirm(signUpPassField, signUpPassConfirmField)
+    })
+    
+    signUpPhoneField.addEventListener('input', () => {
+      APP.testPhoneNumber(signUpPhoneIDCField, signUpPhoneField)
+    })
+    
+    signUpPhoneIDCField.addEventListener('input', () => {
+      let inputValue = signUpPhoneIDCField.value
+      
+      // Allow only numbers and plus sign
+      inputValue = inputValue.replace(/\D/g, '')
+      
+      // Ensure the value always starts with one plus sign
+      if (inputValue === '+') {
+        inputValue = ''
+      } else {
+        if (inputValue.length === 1) {
+          inputValue = '+' + inputValue
+        } else {
+          inputValue = inputValue.slice(0, 4)
+        }
+      }
+      
+      if (!inputValue.startsWith('+')) {
+        inputValue = '+' + inputValue
+      }
+      
+      if (inputValue === '+') {
+        inputValue = ''
+      }
+      
+      signUpPhoneIDCField.value = inputValue
+      updatePhoneInputLabel(signUpPhoneIDCField.value.slice(1))
+      if (countryCodes[`${signUpPhoneIDCField.value.slice(1)}`] !== undefined) {
+        signUpPhoneField.focus()
+      }
+      
+      APP.testPhoneNumber(signUpPhoneIDCField, signUpPhoneField)
+    })
+    
+    // Side Panels
+    
+    signUpEmailField.addEventListener('focus', () => {
+      sidePanelToggle(1)
+    })
+    
+    signUpPassField.addEventListener('focus', () => {
+      sidePanelToggle(2)
+    })
+    
+    signUpPassConfirmField.addEventListener('focus', () => {
+      sidePanelToggle(3)
+    })
+    
+    signUpPhoneField.addEventListener('focus', () => {
+      sidePanelToggle(4)
+    })
+    
+    signUpPhoneIDCField.addEventListener('focus', () => {
+      sidePanelToggle(4)
+    })
+  },
+  validateLogin() {
+    const email = document.getElementById('loginEmail').value
+    const password = document.getElementById('loginPass').value
+    
+    if (true /* check with database */) return true
+    else return false
+  },
+  validateSignUp() {
+    const email = document.getElementById('loginEmail').value
+    const password = document.getElementById('loginPass').value
+    const dateOfBirth = birthDateCheckbox.classList.contains('checked')
+    ? `${yearInput.value}, ${selectedMonthIndex + 1}, ${dayInput.value}` : undefined
+    const region = countryCodes[`${signUpPhoneIDCField.value.slice(1)}`] !== undefined
+    ? countryCodes[`${signUpPhoneIDCField.value.slice(1)}`] : undefined
+    const phoneNum = `(${signUpPhoneIDCField.value}) ${signUpPhoneField.value}`
+    const receiveNews = newsCheckbox.classList.contains('checked') ? true : false
+    
+    // Add To Database
+    
+    return true
+  },
+  testEmail(emailField) {
+    if (emailField.value.length > 22) {
+      emailField.style.fontSize = '0.75rem'
+    } else if (emailField.value.length > 17) {
+      emailField.style.fontSize = '0.88rem'
+    } else {
+      emailField.style.fontSize = '1.1rem'
+    }
+    let re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    let isMatch = re.test(emailField.value)
+    updateInputField(emailField, isMatch)
+  },
+  testPassword(passField) {
+    if (passField.value.length > 3 && passField.value.length < 256) {
+      updateInputField(passField, true)
+    } else {
+      updateInputField(passField, false)
+    }
+    
+    if (passField.value.length > 15) {
+      passField.style.fontSize = '0.88rem'
+      passField.style.width = '173px'
+    } else {
+      passField.style.fontSize = '1.1rem'
+      passField.style.width = '200px'
+    }
+  },
+  testPassConfirm(passField, passConfirmField) {
+    if (passField.value === passConfirmField.value) {
+      updateInputField(passConfirmField, true)
+    } else {
+      updateInputField(passConfirmField, false)
+    }
+    
+    if (passConfirmField.value.length > 15) {
+      passConfirmField.style.fontSize = '0.88rem'
+      passField.style.width = '173px'
+    } else {
+      passConfirmField.style.fontSize = '1.1rem'
+      passField.style.width = '200px'
+    }
+  },
+  testPhoneNumber(IDCField, callingCodeField) {
+    const isCountryCodeValid =
+      countryCodes[`${IDCField.value.slice(1)}`] !== undefined
+    if (IDCField.value === '' && callingCodeField.value === '') {
+      IDCField.parentNode.classList.remove('invalidInput')
+      IDCField.parentNode.classList.remove('validInput')
+    } else if (
+      IDCField.value === '' && isCountryCodeValid && callingCodeField.value.length === 10
+    ) {
+      updateInputField(IDCField, true)
+    } else {
+      updateInputField(IDCField, false)
+    }
+  }
+}
+document.addEventListener('DOMContentLoaded', APP.init)
